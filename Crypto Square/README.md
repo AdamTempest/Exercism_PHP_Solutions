@@ -21,7 +21,8 @@ is normalized to:
 ```
 
 ## **The plaintext should be organized in to a rectangle.** <br>
-<hr>
+
+
 The size of the rectangle (r x c) should be decided by the length of the message, <br>
 such that c >= r and c - r <= 1, where c is the number of columns and r is the number of rows.
 
