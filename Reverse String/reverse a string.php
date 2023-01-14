@@ -7,7 +7,7 @@
             body {
                 background-color: black;
                 color: white;
-                font-size: 30px;
+                font-size: 20px;
             }
         </style>
     </head>
