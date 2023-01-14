@@ -2,5 +2,6 @@
 
 For example: 
 ```
-input: "cool"<br> output: "looc"
+input: "cool" 
+output: "looc"
 ```
