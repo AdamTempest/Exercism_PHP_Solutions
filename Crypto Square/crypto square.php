@@ -8,9 +8,11 @@ function crypto_square($msg){
     $new_msg = "";
 
     // downcasing and removing punctuation and spaces
-    for ($i=0;$i<strlen($msg);$i++){
+    for ($i=0;$i<strlen($msg);$i++)
+    {
         $char = $msg[$i];
         $dec = ord($char);
+
         $con1 = 97<=$dec && $dec<=122;
         $con2 = 48<=$dec && $dec<=57;
         if ($con1 || $con2){     // if it's small letter
@@ -31,15 +33,19 @@ function crypto_square($msg){
     }
 
     // find row and column
-    for ($i=1;$i<$len;$i++){ 
+    for ($i=1;$i<$len;$i++)
+    { 
         $x = $i*$i;
         $y = $i*($i+1);
-        if ($x >= $len){
+
+        if ($x >= $len)
+        {
             $col = $i;
             $row = $i;
             break;
         }
-        else if ($y >= $len){
+        else if ($y >= $len)
+        {
             $col = $i+1;
             $row = $i;
             break;
@@ -48,11 +54,13 @@ function crypto_square($msg){
 
     // making rectangle array
     $arr=[]; $count = 0; $id=0; $line="";
-    for ($j=0;$j<$len-1;$j++){
+    for ($j=0;$j<$len-1;$j++)
+    {
         $e = $new_msg[$j];
         $line = $line.$e;
         $count+=1;
-        if ($count == $col){
+        if ($count == $col)
+        {
             $arr[$id] = $line;
             $line = "";
             $count = 0;
@@ -70,10 +78,13 @@ function crypto_square($msg){
     // encoding the string
     $arr2=[];
     for ($c=0; $c < $col; $c++) {
-        for ($r=0; $r < $row ; $r++) {
-            if ($c < strlen($arr[$r])){
+        for ($r=0; $r < $row ; $r++) 
+        {
+            if ($c < strlen($arr[$r]))
+            {
                 $line = $line .$arr[$r][$c];
-            } else {
+            } else 
+            {
                 break;
             }
         }
