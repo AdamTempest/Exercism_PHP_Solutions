@@ -28,12 +28,15 @@ class HighScores
 
     private function findTopThree($data){
         $topThree=[];
-        $con = count($data)-4;
-        if (count($data)<3){
-            
-        }
-        for ($i=count($data)-1;$i>=0;$i--){
-            array_push($topThree,$data[$i]);
+
+        if (count($data)<=3){
+            for ($i=count($data)-1;$i>=0;$i--){
+                array_push($topThree,$data[$i]);
+            }
+        } else{
+            for ($i=count($data)-1;$i!=count($data)-4;$i--){
+                array_push($topThree,$data[$i]);
+            }
         }
         return $topThree;
     }
