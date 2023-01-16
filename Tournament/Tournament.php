@@ -35,9 +35,34 @@
 
         public function get_finalResult($results){
             $table = "Team                           | MP |  W |  D |  L |  P";
+            $keys = [];
 
+            // assign keys to keys
             foreach($results as $team=>$result){
-                $table = $this->writeToTable($table,$team,$result);
+                array_push($keys,$team);
+            }
+            
+            // bubble sort it
+            $temp = "";
+            $size  =count($keys);
+            for ($i=0;$i<$size;$i++){
+                for ($j=0;$j<$size-$i-1;$j++){
+                    if ($results[$keys[$j]][4]>$results[$keys[$j+1]][4]){
+                        $temp = $keys[$j+1];
+                        $keys[$j+1] = $keys[$j];
+                        $keys[$j] = $temp;
+                    } else if($results[$keys[$j]][4] == $results[$keys[$j+1]][4]){ // if points are equal sort alphabetically
+                        if ($keys[$j] < $keys[$j+1]){
+                            $temp = $keys[$j+1];
+                            $keys[$j+1] = $keys[$j];
+                            $keys[$j] = $temp;
+                        }
+                    }
+                }
+            }
+
+            for ($i=$size-1;$i>=0;$i--){
+                $table = $this->writeToTable($table,$keys[$i],$results[$keys[$i]]);
             }
 
             return $table;
@@ -154,6 +179,7 @@
     "Blithering Badgers;Devastating Donkeys;draw\n" .
     "Allegoric Alaskans;Courageous Californians;draw";
     echo $res ."\n". $bob->tally($res) . "\n\n";
+
 
 
     ?>
