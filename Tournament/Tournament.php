@@ -25,41 +25,52 @@
             }
             $table.=$holder."|";
 
-            for($i=0;$i<5;$i++){
-                $table.=$result[$i];
+            for($i=0;$i<4;$i++){
+                $table.="  ".$result[$i]." |";
             }
+            $table.="  ".$result[4];
+            
+            return $table;
         }
 
         public function get_finalResult($results){
             $table = "Team                           | MP |  W |  D |  L |  P";
 
             foreach($results as $team=>$result){
-                // writeToTable($table,$team,result);
+                $table = $this->writeToTable($table,$team,$result);
             }
 
             return $table;
         }
 
         public function give_points($current_match,$result){
+            
             switch ($current_match[2]){
                 case "win":
                     $result[$current_match[0]][1] += 1; // 1st team's win   += 1
                     $result[$current_match[0]][4] += 3; // 1st team's point += 3
                     $result[$current_match[1]][3] += 1; // 2nd team's loss  += 1
+                    break;
                 case "draw":
                     $result[$current_match[0]][2] += 1; // 1st team's draw  += 1
                     $result[$current_match[0]][4] += 1; // 1st team's point += 1
                     $result[$current_match[1]][2] += 1; // 2nd team's draw  += 1
                     $result[$current_match[1]][4] += 1; // 2nd team's point += 1
+                    break;
                 case "loss":
                     $result[$current_match[0]][3] += 1; // 1st team's loss  += 1
                     $result[$current_match[1]][1] += 1; // 2nd team's win   += 1
                     $result[$current_match[1]][4] += 3; // 2nd team's point += 3
+                    break;
             }
+            
             return $result;
         }
 
         public function tally($scores){
+            if (!(strlen($scores))){ // if it's empty
+                return "Team                           | MP |  W |  D |  L |  P";
+            }
             $matches = explode("\n",$scores);
             $current_match = [];
             $result = [];
@@ -80,29 +91,70 @@
 
                     // give points
                     $result = $this->give_points($current_match,$result);
-
-                    // create table and write it to final result
-                    return $this->get_finalResult($result);
                 }
+                // create table and write it to final result`
+                return $this->get_finalResult($result);
             } else { 
                 $current_match = explode(";",$scores);
                 $result[$current_match[0]] = [1,0,0,0,0]; // [matches played, win, draw, lost, point]
                 $result[$current_match[1]] = [1,0,0,0,0]; // [matches played, win, draw, lost, point]
                 $result = $this->give_points($current_match,$result);
+                // create table and write it to final result
+                return $this->get_finalResult($result);
             }
-            
-            print_r($current_match);
         }
     }
 
     // test cases
     $bob = new Tournament();
-    $bob->tally("Allegoric Alaskans;Blithering Badgers;win");
-    $bob->tally("Allegoric Alaskans;Blithering Badgers;loss");
-    $bob->tally("Allegoric Alaskans;Blithering Badgers;draw");
-    $bob->tally(
+    
+    $res = "";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res = "Allegoric Alaskans;Blithering Badgers;win";
+    echo "$res \n". $bob->tally($res) . "\n\n";
+
+    $res = "Allegoric Alaskans;Blithering Badgers;loss";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res = "Allegoric Alaskans;Blithering Badgers;draw";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res = "Allegoric Alaskans;Blithering Badgers;loss\n" .
+    "Allegoric Alaskans;Blithering Badgers;win";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res = 
+        "Allegoric Alaskans;Blithering Badgers;win\n" .
+        "Blithering Badgers;Courageous Californians;win\n" .    
+        "Courageous Californians;Allegoric Alaskans;loss";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res = 
+    "Allegoric Alaskans;Blithering Badgers;win\n" .
+    "Devastating Donkeys;Courageous Californians;draw\n" .
+    "Devastating Donkeys;Allegoric Alaskans;win\n" .
+    "Courageous Californians;Blithering Badgers;loss\n" .
+    "Blithering Badgers;Devastating Donkeys;loss\n" .
+    "Allegoric Alaskans;Courageous Californians;win";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res =
     "Allegoric Alaskans;Blithering Badgers;loss\n" .
-    "Allegoric Alaskans;Blithering Badgers;win");
+    "Devastating Donkeys;Allegoric Alaskans;loss\n" .
+    "Courageous Californians;Blithering Badgers;draw\n" .
+    "Allegoric Alaskans;Courageous Californians;win";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
+    $res =  
+    "Courageous Californians;Devastating Donkeys;win\n" .
+    "Allegoric Alaskans;Blithering Badgers;win\n" .
+    "Devastating Donkeys;Allegoric Alaskans;loss\n" .
+    "Courageous Californians;Blithering Badgers;win\n" .
+    "Blithering Badgers;Devastating Donkeys;draw\n" .
+    "Allegoric Alaskans;Courageous Californians;draw";
+    echo $res ."\n". $bob->tally($res) . "\n\n";
+
 
     ?>
     </body>
