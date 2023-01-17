@@ -3,7 +3,7 @@
 class Robot
 {
     private $name="";
-    private $history=[];
+    private $history = [];
 
     private function giveName(){
         $n="";
@@ -18,15 +18,6 @@ class Robot
     public function __construct()
     {
         $this->name = $this->giveName();
-        
-        // checking if it's used before 
-        for ($i=0;$i<count($this->history);$i++){
-            if ($this->name == $this->history[$i]){
-                $this->name = $this->giveName();
-                break;
-            }
-        }
-        array_push($this->history,$this->name);
     }
 
     public function getName()
@@ -37,6 +28,13 @@ class Robot
     public function reset()
     {
         $this->name = $this->giveName();
+        for ($i=0;$i<count($this->history);$i++){
+            if ($this->name == $this->history[$i]){
+                $this->name = $this->giveName();
+                break;
+            }
+        }
+        array_push($this->history,$this->name);
     }
 }
 $bob = new Robot();
