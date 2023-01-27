@@ -10,6 +10,7 @@
             body{
                 background-color: #0d1117;
                 color: white;
+                font-family: "Alliance No.1", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
                 font-size: 20px;
                 margin:50px;
                 border: 10px solid gray;
@@ -24,7 +25,6 @@
                 align-items: center;
                 width:600px;
                 font-size:15px;
-                font-family:Futura,Helvetica;
                 margin: auto;
                 margin-top: 10px;
                 padding:20px;
