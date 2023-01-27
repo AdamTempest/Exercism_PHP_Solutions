@@ -20,10 +20,10 @@
 // advance
 class Robot
 {
-    const DIRECTION_NORTH = "n";
-    const DIRECTION_SOUTH = "s";
-    const DIRECTION_EAST  = "e";
-    const DIRECTION_WEST  = "w";
+    const DIRECTION_NORTH = "north";
+    const DIRECTION_SOUTH = "south";
+    const DIRECTION_EAST  = "east";
+    const DIRECTION_WEST  = "west";
 
     /**
      *
@@ -139,68 +139,106 @@ class Robot
     }
 }
 
+// test cases
+
 function display_arr($arr){
     for ($i=0;$i<count($arr);$i++){
         echo "$arr[$i]";
     }
 }
 
-function where_is($person){
-    echo "Steve is facing $person->direction at "; 
+function where_is($person,$name){
+    echo "$name is facing $person->direction at "; 
     display_arr($person->position);
     echo " <br>";
 }
 
 $steve = new Robot([0,0],Robot::DIRECTION_NORTH);
-where_is($steve);
+where_is($steve, 'Steve');
 
 // turn right
+echo "<h2>Test turnRight Method</h2>";
 $steve->turnRight();
 echo "Steve turned right.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnRight();
 echo "Steve turned right, again.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnRight();
 echo "Yet again, Steve turned right.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnRight();
 echo "For the last time, Steve turned right.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 // turn left
+echo "<h2>Test turnLeft Method</h2>";
 $steve->turnLeft();
 echo "Steve turned left.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnLeft();
 echo "Steve turned left, again.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnLeft();
 echo "Yet again, Steve turned left.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->turnLeft();
 echo "'This is the Last time.', Steve said calmly and turned left.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 
 // advance (go straight)
+echo "<h2>Test Advance Method</h2>";
 $steve->advance();
 echo "Steve walked straight.<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
 $steve->advance();
 echo "Steve walked straight .<br>";
-where_is($steve);
+where_is($steve, 'Steve');
 
-// test instructions
+/** test instructions **/
+echo "<h2>Instruction test</h2>";
 
-// test method chaining
+// Instructions to move west and north
+$robot = new Robot([0, 0], Robot::DIRECTION_NORTH);
+$robot->instructions('LAAARALA');
+echo "Robot should be on [-4,1] and facing ", Robot::DIRECTION_WEST, "<br>";
+where_is($robot,'Robot');
+
+// Instructions to move west and south
+$robot = new Robot([2, -7], Robot::DIRECTION_EAST);
+$robot->instructions('RRAAAAALA');
+echo "Robot should be on [-3, -8] and facing ", Robot::DIRECTION_SOUTH;
+where_is($robot,'Robot');
+
+// Instructions to move east and north
+$robot = new Robot([8, 4], Robot::DIRECTION_SOUTH);
+$robot->instructions('LAAARRRALLLL');
+echo "Robot should be on [11,5] and facing ", Robot::DIRECTION_NORTH;
+where_is($robot,'Robot');
+
+/** test Malformed Instruction */
+echo "<h2>Testing Malformed Instruction</h2>";
+$robot = new Robot([0, 0], Robot::DIRECTION_NORTH);
+
+try{
+    $robot->instructions('LARX');
+}
+catch(\InvalidArgumentException $e){
+    echo "Good. Exception was properly thrown out.";
+}
+
+
+/** test method chaining **/
+echo "<h2>Method chaining test</h2>";
+
 $robot = new Robot([0, 0], Robot::DIRECTION_NORTH);
 $robot->turnLeft()
     ->advance()
@@ -210,6 +248,10 @@ $robot->turnLeft()
     ->advance()
     ->turnLeft()
     ->advance();
+
+echo "Robot should be on [-4,1] and facing ", Robot::DIRECTION_WEST, "<br>";
+where_is($robot,"Robot");
+
 ?>
     </body>
 </html>
