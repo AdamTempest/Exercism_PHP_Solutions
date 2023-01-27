@@ -200,6 +200,16 @@ where_is($steve);
 
 // test instructions
 
+// test method chaining
+$robot = new Robot([0, 0], Robot::DIRECTION_NORTH);
+$robot->turnLeft()
+    ->advance()
+    ->advance()
+    ->advance()
+    ->turnRight()
+    ->advance()
+    ->turnLeft()
+    ->advance();
 ?>
     </body>
 </html>
