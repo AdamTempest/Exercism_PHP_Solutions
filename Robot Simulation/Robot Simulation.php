@@ -4,11 +4,23 @@
     	<meta charset="utf-8">
     	<title>Robot Simulator</title>
         <style>
-            body {
+            body{
                 background-color: black;
                 color: white;
                 font-size: 20px;
+                text-align: center;
             }
+            .error{
+                border-left:4px solid #04AA6D;
+                font-size:15px;
+                font-family:Futura,Helvetica;
+                margin: 10px 100px 10px 100px;
+                padding:20px;
+                padding-right:100px;
+                background-color:white;
+                color:black;
+            }
+
         </style>
     </head>
     <body>
@@ -142,9 +154,13 @@ class Robot
 // test cases
 
 function display_arr($arr){
-    for ($i=0;$i<count($arr);$i++){
-        echo "$arr[$i]";
+    $len = count($arr);
+    echo "[";
+    for ($i=0;$i<$len-1;$i++){
+        echo $arr[$i],", ";
     }
+    echo $arr[$len-1];
+    echo "]";
 }
 
 function where_is($person,$name){
@@ -153,6 +169,7 @@ function where_is($person,$name){
     echo " <br>";
 }
 
+echo "<h1> Test cases </h1>";
 $steve = new Robot([0,0],Robot::DIRECTION_NORTH);
 where_is($steve, 'Steve');
 
@@ -196,11 +213,11 @@ where_is($steve, 'Steve');
 // advance (go straight)
 echo "<h2>Test Advance Method</h2>";
 $steve->advance();
-echo "Steve walked straight.<br>";
+echo "Steve walked straight towards $steve->direction.<br>";
 where_is($steve, 'Steve');
 
 $steve->advance();
-echo "Steve walked straight .<br>";
+echo "Steve walked straight towards $steve->direction.<br>";
 where_is($steve, 'Steve');
 
 /** test instructions **/
@@ -215,24 +232,28 @@ where_is($robot,'Robot');
 // Instructions to move west and south
 $robot = new Robot([2, -7], Robot::DIRECTION_EAST);
 $robot->instructions('RRAAAAALA');
-echo "Robot should be on [-3, -8] and facing ", Robot::DIRECTION_SOUTH;
+echo "Robot should be on [-3, -8] and facing ", Robot::DIRECTION_SOUTH, "<br>";
 where_is($robot,'Robot');
 
 // Instructions to move east and north
 $robot = new Robot([8, 4], Robot::DIRECTION_SOUTH);
 $robot->instructions('LAAARRRALLLL');
-echo "Robot should be on [11,5] and facing ", Robot::DIRECTION_NORTH;
+echo "Robot should be on [11,5] and facing ", Robot::DIRECTION_NORTH, "<br>";
 where_is($robot,'Robot');
 
 /** test Malformed Instruction */
 echo "<h2>Testing Malformed Instruction</h2>";
 $robot = new Robot([0, 0], Robot::DIRECTION_NORTH);
-
+echo "Instruction LARX was given. <br>";
 try{
     $robot->instructions('LARX');
 }
 catch(\InvalidArgumentException $e){
-    echo "Good. Exception was properly thrown out.";
+    echo "Good. Exception was properly thrown out.<br>";
+    echo "<div class='error'>";
+    echo $e;
+    echo "</div>";
+    
 }
 
 
