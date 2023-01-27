@@ -12,11 +12,13 @@
             }
             .error{
                 border-left:4px solid #04AA6D;
+                align-items: center;
+                width:600px;
                 font-size:15px;
                 font-family:Futura,Helvetica;
-                margin: 10px 100px 10px 100px;
+                margin: auto;
+                margin-top: 10px;
                 padding:20px;
-                padding-right:100px;
                 background-color:white;
                 color:black;
             }
@@ -251,7 +253,7 @@ try{
 catch(\InvalidArgumentException $e){
     echo "Good. Exception was properly thrown out.<br>";
     echo "<div class='error'>";
-    echo $e;
+    echo $e->getMessage();
     echo "</div>";
     
 }
