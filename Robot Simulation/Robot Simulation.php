@@ -4,12 +4,21 @@
     	<meta charset="utf-8">
     	<title>Robot Simulator</title>
         <style>
+            html{
+                background-color: lightgrey;
+            }
             body{
                 background-color: black;
                 color: white;
                 font-size: 20px;
+                margin:50px;
+                border: 10px solid gray;
+                padding:50px;
+                padding-top:0px;
                 text-align: center;
+                border-radius:100px;
             }
+
             .error{
                 border-left:4px solid #04AA6D;
                 align-items: center;
