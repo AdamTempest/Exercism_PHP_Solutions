@@ -5,10 +5,10 @@
     	<title>Robot Simulator</title>
         <style>
             html{
-                background-color: lightgrey;
+                background-color: black;
             }
             body{
-                background-color: black;
+                background-color: #0d1117;
                 color: white;
                 font-size: 20px;
                 margin:50px;
