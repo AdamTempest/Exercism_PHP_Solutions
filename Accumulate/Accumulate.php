@@ -19,12 +19,10 @@ $accumulator = function ($value) {
     return $value ** 2;
 };
 
-$result = accumulate([],$accumulator);
-displayarr($result);
-
 $result = accumulate([1,2,3],$accumulator);
 echo "Square the numbers inside this [1,2,3]\n";
 displayarr($result);
+echo "\n";
 
 $accumulator = function ($string) { 
 		for ($i=0;$i<strlen($string);$i++){
@@ -38,6 +36,7 @@ $accumulator = function ($string) {
 $result = accumulate(['Hello', 'World!'], $accumulator);
 echo "Capitalize strings inside this ['Hello', 'World!']\n";
 displayarr($result);
+echo "\n";
 
 $accumulator = function ($string) {
     return strrev($string);
@@ -46,6 +45,7 @@ $accumulator = function ($string) {
 $result = accumulate(['olleH', '!dlroW'], $accumulator);
 echo "Reverse this ['olleH', '!dlroW']\n";
 displayarr($result);
+echo "\n";
 
 $chars = ['a', 'b', 'c'];
 $digits = [1, 2, 3];
@@ -56,18 +56,29 @@ $result = accumulate($chars, function ($char) use ($digits) {
         return $char . $digit;
     });
 });
-echo "Join ['a', 'b', 'c'] with [1, 2, 3] individually\n"
-displayarr($result);
+echo "Join ['a', 'b', 'c'] with [1, 2, 3] individually\n";
+for ($j=0;$j<count($result);$j++){
+	displayarr($result[$j]);
+}
+echo "\n";
+
 
 // Additional points for making the following tests pass
 $result = accumulate([" Hello\t", "\t World!\n "], 'trim');
-echo "Trim this [\" Hello\t\", \"\t World!\n \"]\n";
+echo "Trim this [\" Hello\\t\", \"\\t World!\\n \"]\n";
 displayarr($result);
-
+echo "\n";
 
 $result = accumulate(['Hello', 'World!'], 'Str::len');
-echo "Length of elements in ['Hello', 'World!']"
+echo "Length of elements in ['Hello', 'World!']\n";
 displayarr($result);
+echo "\n";
 
-
+class Str
+{
+    public static function len($string): int
+    {
+        return strlen($string);
+    }
+}
 ?>
